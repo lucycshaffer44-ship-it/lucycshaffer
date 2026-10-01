@@ -44,13 +44,33 @@
     const part = (u) => Number((m[1].match(new RegExp("(\\d+)" + u)) || [0, 0])[1]);
     return part("h") * 3600 + part("m") * 60 + part("s");
   };
+  // YouTube and Instagram won't play inside a page opened straight from a file (file://),
+  // so show a link instead of a broken player in that case.
+  const offline = location.protocol === "file:";
+  const safe = (t) => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  const offlineNote = (href, site) =>
+    `<div class="offline-note"><p>${site} videos play once the site is online.</p>` +
+    `<a class="btn btn-primary" href="${href}" target="_blank" rel="noopener">Watch on ${site} ↗</a></div>`;
+  const featured = document.querySelector(".reel-frame iframe");
+  if (featured && offline) {
+    const fid = ytId(featured.src);
+    featured.outerHTML = offlineNote(`https://www.youtube.com/watch?v=${fid}`, "YouTube");
+  }
+
   const ytCards = document.querySelectorAll(".card[data-youtube], .card[data-video], .card[data-instagram]");
   if (ytCards.length) {
     const modal = document.createElement("dialog");
     modal.className = "video-modal";
-    modal.innerHTML = '<button class="modal-close" type="button">Close ✕</button><div class="modal-frame"></div>';
+    modal.innerHTML =
+      '<button class="modal-close" type="button">Close ✕</button><div class="modal-frame"></div>' +
+      '<a class="modal-alt" target="_blank" rel="noopener"></a>';
     document.body.appendChild(modal);
     const frame = modal.querySelector(".modal-frame");
+    const alt = modal.querySelector(".modal-alt");
+    const setAlt = (href, label) => {
+      alt.hidden = !href || offline;
+      if (href) { alt.href = href; alt.textContent = label + " ↗"; }
+    };
     const close = () => modal.close();
     modal.querySelector(".modal-close").addEventListener("click", close);
     modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
@@ -87,18 +107,27 @@
         modal.classList.toggle("is-insta", Boolean(insta));
         if (insta) {
           modal.classList.remove("is-vertical");
-          frame.innerHTML = `<iframe src="https://www.instagram.com/reel/${insta}/embed/captioned/" title="${title.replace(/"/g, "&quot;")}" allowfullscreen scrolling="no"></iframe>`;
+          const page = `https://www.instagram.com/reel/${insta}/`;
+          setAlt(page, "View on Instagram");
+          frame.innerHTML = offline
+            ? offlineNote(page, "Instagram")
+            : `<iframe src="https://www.instagram.com/p/${insta}/embed/captioned/" title="${safe(title)}" allowfullscreen scrolling="no" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
           modal.showModal();
           return;
         }
         if (file) {
           modal.classList.remove("is-vertical");
+          setAlt(null);
           frame.innerHTML = `<video controls autoplay playsinline src="${file}" style="width:100%;height:100%;background:#000"></video>`;
           modal.showModal();
           return;
         }
         modal.classList.toggle("is-vertical", card.dataset.youtube.includes("/shorts/"));
-        frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${start ? `&start=${start}` : ""}" title="${title.replace(/"/g, "&quot;")}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+        const page = `https://www.youtube.com/watch?v=${id}${start ? `&t=${start}s` : ""}`;
+        setAlt(page, "Watch on YouTube");
+        frame.innerHTML = offline
+          ? offlineNote(page, "YouTube")
+          : `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1${start ? `&start=${start}` : ""}" title="${safe(title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
         modal.showModal();
       });
     });

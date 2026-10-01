@@ -332,3 +332,10 @@ button.card-link { font: inherit; text-align: left; border: 0; padding: 0; backg
 .video-modal.is-vertical .modal-frame { aspect-ratio: 9 / 16; }
 .video-modal.is-insta { width: min(100% - 32px, 420px); }
 .video-modal.is-insta .modal-frame { aspect-ratio: auto; height: min(calc(100vh - 120px), 760px); background: #fff; }
+.modal-alt { display: inline-block; margin-top: 12px; color: var(--paper); font-weight: 600; font-size: .92rem; }
+.modal-alt[hidden] { display: none; }
+.offline-note {
+  height: 100%; min-height: 220px; display: grid; place-content: center; justify-items: center; gap: 14px;
+  padding: 24px; text-align: center; color: rgba(255,255,255,.85); background: radial-gradient(circle at 30% 20%, #2e3f66, var(--ink) 70%);
+}
+.offline-note p { margin: 0; }
