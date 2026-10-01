@@ -199,7 +199,7 @@ ul, ol { margin: 0; padding: 0; }
 .card.is-hidden { display: none; }
 .card-link { display: block; text-decoration: none; height: 100%; }
 .card-thumb { position: relative; aspect-ratio: 16 / 10; }
-.card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.card-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .thumb-1 { background: linear-gradient(135deg, #e03a3e, #7a1f3d); }
 .thumb-2 { background: linear-gradient(135deg, #16213a, #3b5487); }
 .thumb-3 { background: linear-gradient(135deg, #f2b134, #e0663a); }
@@ -212,7 +212,7 @@ ul, ol { margin: 0; padding: 0; }
 .card-body { padding: 20px 22px 24px; }
 .card-outlet { color: var(--accent); font-size: .68rem; margin-bottom: .5em; }
 .card-body h3 { font-size: 1.2rem; }
-.card-body p:last-child { color: var(--ink-soft); font-size: .93rem; margin: 0; }
+.card-body p:not(.card-outlet):not(.card-cta) { color: var(--ink-soft); font-size: .93rem; margin: 0; }
 
 /* ---------- Resume ---------- */
 .resume-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; }
@@ -323,3 +323,5 @@ button.card-link { font: inherit; text-align: left; border: 0; padding: 0; backg
   display: block; margin: 0 0 10px auto; background: var(--paper); color: var(--ink); border: 0; border-radius: 999px;
   font: 600 .9rem var(--font-body); padding: .5em 1.1em; cursor: pointer;
 }
+.work-subhead { font-size: 1.5rem; margin: 56px 0 24px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
+.card-body p.card-cta { color: var(--accent); font-weight: 600; font-size: .9rem; margin-top: .8em; }

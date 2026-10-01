@@ -35,6 +35,14 @@
     const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
     return m ? m[1] : url.trim();
   };
+  // Start time from ?t=3017, ?t=50m17s or ?start=3017
+  const ytStart = (url) => {
+    const m = url.match(/[?&](?:t|start)=([\dhms]+)/);
+    if (!m) return 0;
+    if (/^\d+$/.test(m[1])) return Number(m[1]);
+    const part = (u) => Number((m[1].match(new RegExp("(\\d+)" + u)) || [0, 0])[1]);
+    return part("h") * 3600 + part("m") * 60 + part("s");
+  };
   const ytCards = document.querySelectorAll(".card[data-youtube]");
   if (ytCards.length) {
     const modal = document.createElement("dialog");
@@ -49,6 +57,7 @@
 
     ytCards.forEach((card) => {
       const id = ytId(card.dataset.youtube);
+      const start = ytStart(card.dataset.youtube);
       const title = card.querySelector("h3")?.textContent || "Video";
       const thumb = card.querySelector(".card-thumb");
       if (!thumb.querySelector("img")) {
@@ -56,6 +65,7 @@
         img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
         img.alt = "";
         img.loading = "lazy";
+        img.onerror = () => img.remove();
         thumb.prepend(img);
       }
       const badge = document.createElement("span");
@@ -71,7 +81,7 @@
       while (card.firstChild) btn.appendChild(card.firstChild);
       card.appendChild(btn);
       btn.addEventListener("click", () => {
-        frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="${title.replace(/"/g, "&quot;")}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+        frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${start ? `&start=${start}` : ""}" title="${title.replace(/"/g, "&quot;")}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
         modal.showModal();
       });
     });
