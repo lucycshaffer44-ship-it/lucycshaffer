@@ -83,10 +83,12 @@
       card.appendChild(btn);
       btn.addEventListener("click", () => {
         if (file) {
+          modal.classList.remove("is-vertical");
           frame.innerHTML = `<video controls autoplay playsinline src="${file}" style="width:100%;height:100%;background:#000"></video>`;
           modal.showModal();
           return;
         }
+        modal.classList.toggle("is-vertical", card.dataset.youtube.includes("/shorts/"));
         frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${start ? `&start=${start}` : ""}" title="${title.replace(/"/g, "&quot;")}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
         modal.showModal();
       });
