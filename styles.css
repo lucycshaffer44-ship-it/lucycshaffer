@@ -330,3 +330,5 @@ button.card-link { font: inherit; text-align: left; border: 0; padding: 0; backg
 .tl-photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 30%; border-radius: 10px; box-shadow: var(--shadow); }
 .video-modal.is-vertical { width: min(100% - 32px, calc((100vh - 120px) * 9 / 16)); }
 .video-modal.is-vertical .modal-frame { aspect-ratio: 9 / 16; }
+.video-modal.is-insta { width: min(100% - 32px, 420px); }
+.video-modal.is-insta .modal-frame { aspect-ratio: auto; height: min(calc(100vh - 120px), 760px); background: #fff; }
