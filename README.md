@@ -15,6 +15,10 @@ A personal portfolio site for a Broadcast & Digital Journalism student. It's pla
 - **Featured video:** the YouTube embed at the top of the Work section. Swap the video ID in its `<iframe>` to change it.
 - **Video files in the repo:** add `data-video="assets/video/clip.mp4"` to a card (like the weather card) to play it in the pop-up player.
 - **YouTube videos:** in the Work section, add `data-youtube="https://youtu.be/VIDEO_ID"` to a card's `<article>`. The thumbnail and the pop-up player are set up automatically. There's a copy-paste template in a comment above the cards.
+- **Experience photos:** save them in `assets/img/experience/` with these names and they appear under that entry automatically:
+  `cny-womens-network-1.jpg`, `inventors-hall-of-fame-1.jpg`, `otn-social-1.jpg`, `mysuexperience-1.jpg`, `cooking-with-cuse-1.jpg`, `otn-comedy-1.jpg`, `wjpz-1.jpg`, `creator-economy-1.jpg`, `studio-b-1.jpg`.
+  For more than one photo, copy the `<img>` inside that entry's `<div class="tl-photos">` and change `-1` to `-2`, `-3` and so on.
+- **Card pictures:** `assets/img/waer-mayor.jpg` (WAER story) and `assets/img/instagram-reel.jpg` (Instagram card).
 - **Filters:** set each card's `data-category` to one or more of `broadcast digital writing audio`.
 - **Ticker:** edit the "LATEST" items near the top of `index.html`.
 
