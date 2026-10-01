@@ -25,9 +25,57 @@
         b.classList.toggle("is-active", b === btn);
         b.setAttribute("aria-pressed", String(b === btn));
       });
-      cards.forEach((c) => c.classList.toggle("is-hidden", f !== "all" && c.dataset.category !== f));
+      cards.forEach((c) => c.classList.toggle("is-hidden", f !== "all" && !c.dataset.category.split(" ").includes(f)));
     })
   );
+
+  // YouTube cards: <article class="card" data-youtube="https://youtu.be/..."> gets a thumbnail
+  // and opens the video in a pop-up player.
+  const ytId = (url) => {
+    const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
+    return m ? m[1] : url.trim();
+  };
+  const ytCards = document.querySelectorAll(".card[data-youtube]");
+  if (ytCards.length) {
+    const modal = document.createElement("dialog");
+    modal.className = "video-modal";
+    modal.innerHTML = '<button class="modal-close" type="button">Close ✕</button><div class="modal-frame"></div>';
+    document.body.appendChild(modal);
+    const frame = modal.querySelector(".modal-frame");
+    const close = () => modal.close();
+    modal.querySelector(".modal-close").addEventListener("click", close);
+    modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
+    modal.addEventListener("close", () => (frame.innerHTML = ""));
+
+    ytCards.forEach((card) => {
+      const id = ytId(card.dataset.youtube);
+      const title = card.querySelector("h3")?.textContent || "Video";
+      const thumb = card.querySelector(".card-thumb");
+      if (!thumb.querySelector("img")) {
+        const img = document.createElement("img");
+        img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+        img.alt = "";
+        img.loading = "lazy";
+        thumb.prepend(img);
+      }
+      const badge = document.createElement("span");
+      badge.className = "play-badge";
+      badge.setAttribute("aria-hidden", "true");
+      badge.textContent = "▶";
+      thumb.appendChild(badge);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "card-link";
+      btn.setAttribute("aria-label", `Play video: ${title}`);
+      while (card.firstChild) btn.appendChild(card.firstChild);
+      card.appendChild(btn);
+      btn.addEventListener("click", () => {
+        frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="${title.replace(/"/g, "&quot;")}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+        modal.showModal();
+      });
+    });
+  }
 
   // Ticker: duplicate the items so the scroll loops with no gap
   const list = document.querySelector(".ticker-list");

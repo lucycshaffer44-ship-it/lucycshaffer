@@ -300,3 +300,26 @@ ul, ol { margin: 0; padding: 0; }
   .section { padding: 24px 0; }
   .contact { background: none; color: var(--ink); }
 }
+
+/* ---------- Real media ---------- */
+.reel-frame video { width: 100%; height: 100%; display: block; background: #000; }
+.headshot { object-position: center 18%; }
+.card { display: flex; flex-direction: column; }
+.card-link { color: inherit; cursor: pointer; }
+button.card-link { font: inherit; text-align: left; border: 0; padding: 0; background: none; width: 100%; }
+.card-thumb .play-badge {
+  position: absolute; inset: 0; margin: auto; width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(224, 58, 62, .92); color: #fff; display: grid; place-items: center; font-size: 1.2rem; padding-left: 4px;
+  transition: transform .2s;
+}
+.card:hover .play-badge { transform: scale(1.1); }
+
+/* YouTube pop-up player */
+.video-modal { border: 0; padding: 0; background: transparent; width: min(100% - 32px, 960px); max-width: none; }
+.video-modal::backdrop { background: rgba(10, 15, 28, .85); }
+.video-modal .modal-frame { aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius); overflow: hidden; }
+.video-modal iframe { width: 100%; height: 100%; border: 0; }
+.modal-close {
+  display: block; margin: 0 0 10px auto; background: var(--paper); color: var(--ink); border: 0; border-radius: 999px;
+  font: 600 .9rem var(--font-body); padding: .5em 1.1em; cursor: pointer;
+}

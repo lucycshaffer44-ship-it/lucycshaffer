@@ -9,14 +9,13 @@ A personal portfolio site for a Broadcast & Digital Journalism student. It's pla
 - `assets/img/`: put photos here.
 - `assets/docs/`: put your resume PDF here.
 
-## Make it yours (checklist)
-1. **Fill in placeholders.** Search `index.html` for `[` and replace every `[bracketed]` item with your real info.
-2. **Headshot:** save it as `assets/img/headshot.jpg` (a portrait crop works best). It shows up automatically.
-3. **Resume PDF:** save it as `assets/docs/Lucy-Shaffer-Resume.pdf`.
-4. **Demo reel:** upload to YouTube (unlisted is fine), then in the Work section uncomment the `<iframe>`, paste your video ID, and delete the placeholder `<div>`.
-5. **Work cards:** set each card's `href="#"` to the real link. Add a thumbnail with `<img src="assets/img/clip1.jpg" alt="...">` inside `.card-thumb`. Set `data-category` to `broadcast`, `digital`, `writing` or `audio` so the filters work. Copy a whole `<article>` to add more.
-6. **Ticker:** edit the "LATEST" items near the top with recent wins.
-7. **Socials:** replace the `#` links in Contact, or delete any you don't use.
+## Updating content
+- **Headshot:** `assets/img/headshot.jpg`. Replace the file to change it.
+- **Resume PDF:** `assets/docs/Lucy-Shaffer-Resume.pdf`. Replace it with the same file name whenever the resume changes.
+- **Featured video:** `assets/video/weather-anchor.mp4` with its poster image `assets/img/weather-anchor-poster.jpg`.
+- **YouTube videos:** in the Work section, add `data-youtube="https://youtu.be/VIDEO_ID"` to a card's `<article>`. The thumbnail and the pop-up player are set up automatically. There's a copy-paste template in a comment above the cards.
+- **Filters:** set each card's `data-category` to one or more of `broadcast digital writing audio`.
+- **Ticker:** edit the "LATEST" items near the top of `index.html`.
 
 ## Preview locally
 Open `index.html` in your browser, or run `python3 -m http.server` and visit http://localhost:8000.
