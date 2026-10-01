@@ -325,6 +325,6 @@ button.card-link { font: inherit; text-align: left; border: 0; padding: 0; backg
 .card-body p.card-cta { color: var(--accent); font-weight: 600; font-size: .9rem; margin-top: .8em; }
 
 /* Experience photos: drop images in assets/img/experience/ */
-.tl-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 14px; }
+.tl-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 14px; }
 .tl-photos:empty { display: none; }
-.tl-photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; box-shadow: var(--shadow); }
+.tl-photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 30%; border-radius: 10px; box-shadow: var(--shadow); }
