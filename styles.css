@@ -339,3 +339,5 @@ button.card-link { font: inherit; text-align: left; border: 0; padding: 0; backg
   padding: 24px; text-align: center; color: rgba(255,255,255,.85); background: radial-gradient(circle at 30% 20%, #2e3f66, var(--ink) 70%);
 }
 .offline-note p { margin: 0; }
+/* Move the play button off-center when it would cover a face */
+.card-thumb.badge-corner .play-badge { inset: auto auto 12px 12px; margin: 0; width: 44px; height: 44px; font-size: 1rem; }
