@@ -12,7 +12,8 @@ A personal portfolio site for a Broadcast & Digital Journalism student. It's pla
 ## Updating content
 - **Headshot:** `assets/img/headshot.jpg`. Replace the file to change it.
 - **Resume PDF:** `assets/docs/Lucy-Shaffer-Resume.pdf`. Replace it with the same file name whenever the resume changes.
-- **Featured video:** `assets/video/weather-anchor.mp4` with its poster image `assets/img/weather-anchor-poster.jpg`.
+- **Featured video:** the YouTube embed at the top of the Work section. Swap the video ID in its `<iframe>` to change it.
+- **Video files in the repo:** add `data-video="assets/video/clip.mp4"` to a card (like the weather card) to play it in the pop-up player.
 - **YouTube videos:** in the Work section, add `data-youtube="https://youtu.be/VIDEO_ID"` to a card's `<article>`. The thumbnail and the pop-up player are set up automatically. There's a copy-paste template in a comment above the cards.
 - **Filters:** set each card's `data-category` to one or more of `broadcast digital writing audio`.
 - **Ticker:** edit the "LATEST" items near the top of `index.html`.

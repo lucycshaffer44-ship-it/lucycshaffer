@@ -29,8 +29,8 @@
     })
   );
 
-  // YouTube cards: <article class="card" data-youtube="https://youtu.be/..."> gets a thumbnail
-  // and opens the video in a pop-up player.
+  // Video cards: <article class="card" data-youtube="https://youtu.be/..."> gets a thumbnail and opens
+  // in a pop-up player. data-video="assets/video/clip.mp4" does the same for a video file in this repo.
   const ytId = (url) => {
     const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
     return m ? m[1] : url.trim();
@@ -43,7 +43,7 @@
     const part = (u) => Number((m[1].match(new RegExp("(\\d+)" + u)) || [0, 0])[1]);
     return part("h") * 3600 + part("m") * 60 + part("s");
   };
-  const ytCards = document.querySelectorAll(".card[data-youtube]");
+  const ytCards = document.querySelectorAll(".card[data-youtube], .card[data-video]");
   if (ytCards.length) {
     const modal = document.createElement("dialog");
     modal.className = "video-modal";
@@ -56,11 +56,12 @@
     modal.addEventListener("close", () => (frame.innerHTML = ""));
 
     ytCards.forEach((card) => {
-      const id = ytId(card.dataset.youtube);
-      const start = ytStart(card.dataset.youtube);
+      const file = card.dataset.video;
+      const id = file ? null : ytId(card.dataset.youtube);
+      const start = file ? 0 : ytStart(card.dataset.youtube);
       const title = card.querySelector("h3")?.textContent || "Video";
       const thumb = card.querySelector(".card-thumb");
-      if (!thumb.querySelector("img")) {
+      if (id && !thumb.querySelector("img")) {
         const img = document.createElement("img");
         img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
         img.alt = "";
@@ -81,6 +82,11 @@
       while (card.firstChild) btn.appendChild(card.firstChild);
       card.appendChild(btn);
       btn.addEventListener("click", () => {
+        if (file) {
+          frame.innerHTML = `<video controls autoplay playsinline src="${file}" style="width:100%;height:100%;background:#000"></video>`;
+          modal.showModal();
+          return;
+        }
         frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${start ? `&start=${start}` : ""}" title="${title.replace(/"/g, "&quot;")}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
         modal.showModal();
       });
