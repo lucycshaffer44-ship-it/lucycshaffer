@@ -107,7 +107,7 @@
         modal.classList.toggle("is-insta", Boolean(insta));
         if (insta) {
           modal.classList.remove("is-vertical");
-          const page = `https://www.instagram.com/reel/${insta}/`;
+          const page = `https://www.instagram.com/p/${insta}/`;
           setAlt(page, "View on Instagram");
           frame.innerHTML = offline
             ? offlineNote(page, "Instagram")
